@@ -1,0 +1,92 @@
+#jangan di ganti, kecuali udh benar2 paham
+tproxy-port: 7893
+bind-address: '*'
+mode: rule
+allow-lan: true
+log-level: silent
+external-controller: 0.0.0.0:9090
+external-ui: yacd-gh-pages
+ipv6: true
+secret : ""
+dns:
+  enable: true
+  ipv6: true
+  listen: 0.0.0.0:1053
+  enhanced-mode: fake-ip
+  fake-ip-range: 28.0.0.0/8
+  use-hosts: true
+  nameserver:
+    - https://cloudflare-dns.com/dns-query
+  fallback:
+    - https://dns.google/dns-query  
+proxies:
+  - {name: "[Trojan] SG-OVH", server: sg4-trojan.bonds.id, port: 443, udp: true, type: trojan, password: 06652d20-5ae8-11ec-8d34-1239d0255272, sni: maps.google.com, skip-cert-verify: true}
+  - {name: "[Trojan] SG-HE 2", server: sg2-trojan.bonds.id, port: 443, udp: true, type: trojan, password: 17ce6840-5ae8-11ec-9cda-1239d0255272, sni: maps.google.com, skip-cert-verify: true}
+  - {name: "[Trojan] SG-HE 3", server: sg3-trojan.bonds.id, port: 443, udp: true, type: trojan, password: 2a5fb160-5ae8-11ec-bb6e-1239d0255272, sni: maps.google.com, skip-cert-verify: true}
+  - {name: "[Trojan] SG-HE MUX", server: sg6-trojan.bonds.id, port: 443, udp: true, type: trojan, password: 350cf240-5ae8-11ec-8ec8-1239d0255272, sni: maps.google.com, skip-cert-verify: true}
+
+proxy-groups:
+  - name: AKUN
+    type: select
+    proxies: 
+      - "[Trojan] SG-OVH"
+      - "[Trojan] SG-HE 2"
+      - "[Trojan] SG-HE 3"
+      - "[Trojan] SG-HE MUX"
+  - name: STREAMING  
+    type: select
+    proxies: 
+      - "[Trojan] SG-OVH"
+      - "[Trojan] SG-HE 2"
+      - "[Trojan] SG-HE 3"
+      - "[Trojan] SG-HE MUX"
+  - name: SOSIAL MEDIA
+    type: select
+    proxies: 
+      - "[Trojan] SG-OVH"
+      - "[Trojan] SG-HE 2"
+      - "[Trojan] SG-HE 3"
+      - "[Trojan] SG-HE MUX"
+  - name: INDONESIA
+    type: select
+    proxies:
+      - "[Trojan] SG-OVH"
+      - "[Trojan] SG-HE 2"
+      - "[Trojan] SG-HE 3"
+      - "[Trojan] SG-HE MUX"
+  - name: ADS BLOCK
+    type: select
+    proxies:
+      - AKUN
+      - REJECT
+rule-providers:
+  reject:
+    type: http
+    behavior: domain
+    url: "https://bit.ly/3mhQskP"
+    path: ./premium/rules/reject.yaml
+    interval: 86400    
+  sosmed:
+    type: http
+    behavior: "classical"
+    url: "https://bit.ly/3p7R7Y5"
+    path: ./premium/rules/sosmed.yaml
+    interval: 86400
+  streaming:
+    behavior: "classical"
+    type: http
+    url: "https://bit.ly/32f6Iw3"
+    #interval: 86400
+    path: ./premium/rules/streaming.yaml    
+  indonesia:
+    behavior: "classical"
+    type: http
+    url: "https://bit.ly/33HTLvp"
+    interval: 86400
+    path: ./premium/rules/Indonesian.yaml
+rules:
+  - RULE-SET,reject,ADS BLOCK
+  - RULE-SET,indonesia,INDONESIA
+  - RULE-SET,sosmed,SOSIAL MEDIA
+  - RULE-SET,streaming,STREAMING
+  - MATCH,AKUN

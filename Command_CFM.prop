@@ -1,0 +1,98 @@
+#clash
+alias cek='su -c /data/adb/clash/kernel/clash -t -d /data/adb/clash -f /data/adb/clash/config.yaml'
+alias stop='su -c touch /data/adb/modules/Clash4magisk/disable'
+'
+alias start='su -c rm -f /data/adb/modules/Clash4magisk/disable'
+
+alias restart='su -c touch /data/adb/modules/Clash4magisk/disable && su -c rm -f /data/adb/modules/Clash4magisk/disable'
+
+alias clear='su -c /data/adb/clash/scripts/clash.service -k && su -c /data/adb/clash/scripts/clash.tproxy -k'
+
+alias port='sudo lsof -i :9090 && sudo lsof -i :1053'
+alias log='su -c curl -v http://127.0.0.1:9090/logs?level=debug'
+alias pid='su -c cat /data/adb/clash/run/clash.pid'
+alias runlog='su -c cat /data/adb/clash/run/run.logs'
+alias tc='ps -eo command,lstart,etime | grep clash'
+
+
+#contoh_general_dns
+tproxy-port: 7893
+bind-address: '*'
+mode: rule
+allow-lan: true
+log-level: silent
+external-controller: 127.0.0.1:9090
+external-ui: yacd-gh-pages
+ipv6: false
+secret: ""
+dns:
+  enable: true
+  use-hosts: true
+  ipv6: true
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:1053
+  nameserver:
+    - 1.1.1.1
+  fallback:
+    - 8.8.8.8
+    
+    
+- use kernel Clash.Meta 1.8.0
+- fix size config.yaml 
+- fix `on` `off` module `cfm` di magisk manager a12
+- fix A12 cpu issue
+- remove file `Templet`
+- command di file `note`
+- support vless-gRPC & TroGo
+```
+- name: "[vless] Vless gRPC"
+  server: your server
+  port: port
+  type: vless
+  uuid: "password"
+  network: grpc
+  gRPC-mode: gun
+  tls: true
+  servername: "bug"
+  sni: "bug"
+  udp: true
+  skip-cert-verify: true
+  grpc-opts: 
+    grpc-service-name: "service name grpc"
+```
+```
+- name: "[Trojan] Trojan-Go"
+  server: server
+  port: 443
+  type: trojan
+  password: "example"
+  network: ws
+  sni: example.com
+  servername: example.com
+  skip-cert-verify: true 
+  tls: true
+  udp: true
+  ws-opts:
+    path: /path
+    headers:
+      Host: example.com
+```
+- [Tutorial CFM](https://telegra.ph/𝓒𝓵𝓪𝓼𝓱𝓕𝓸𝓻𝓜𝓪𝓰𝓲𝓼𝓴-11-28)
+- [info](https://t.me/trick_ngirit)
+
+
+
+# `clash4magisk`
+***`Translate Indonesia`***
+<h1 align="center">
+  <img src="https://github.com/Dreamacro/clash/raw/master/docs/logo.png" alt="Clash" width="200">
+  <br>Clash<br>
+</h1>
+
+<h4 align="center">A rule-based tunnel in Go.</h4>
+
+>Dasbor from [Clash-Dashboard](https://github.com/Dreamacro/clash-dashboard) / [Yacd](https://github.com/haishanh/yacd).
+
+>A fork of [Clash for Magisk](https://github.com/kalasutra/Clash_For_Magisk).
+
+>***`For tutorial`*** [Indonesia](https://telegra.ph/𝓒𝓵𝓪𝓼𝓱𝓕𝓸𝓻𝓜𝓪𝓰𝓲𝓼𝓴-11-28). 
