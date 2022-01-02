@@ -3,7 +3,6 @@
 scripts=`realpath $0`
 scripts_dir=`dirname ${scripts}`
 . /data/adb/clash/clash.config
-date_date=`date -u`
 
 create_rule_rules() {
     ip rule add fwmark ${mark_id} table ${table_id} pref ${pref_id}
@@ -162,7 +161,7 @@ flush_rules() {
     ${iptables_wait} -t mangle -F CLASH_PRE
     ${iptables_wait} -t mangle -X CLASH_PRE
     
-    echo "[info] : aturan iptables dihapus | 🅳🅸🆂🅲🅾🅽🅽🅴🆃." >> ${CFM_logs_file} 
+    echo "[info] : aturan iptables dihapus | 🅳🅸🆂🅲🅾🅽🅽🅴🆃." >> ${CFM_logs_file}
 }
 
 while getopts ":sk" signal ; do

@@ -2,7 +2,7 @@
 
 scripts=`realpath $0`
 scripts_dir=`dirname ${scripts}`
-. /data/clash/clash.config
+. /data/adb/clash/clash.config
 
 start_clash() {
     rm -rf ${CFM_logs_file}
@@ -30,9 +30,9 @@ start_clash() {
         echo "[info] : terdeteksi bahwa Clash telah dimulai. on off module magisk" >> ${CFM_logs_file}
         exit 1
     fi
-
+    
     echo ${date_day} >> ${CFM_logs_file}
-
+    
     if [ -f "${Clash_bin_path}" ] ; then
         mkdir -p ${Clash_run_path}
         chown ${Clash_user_group} ${Clash_bin_path}
