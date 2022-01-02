@@ -2,8 +2,8 @@ SKIPUNZIP=1
 
 status=""
 architecture=""
-system_gid="1000"
-system_uid="1000"
+system_gid="0"
+system_uid="0"
 clash_data_dir="/data/adb/clash"
 modules_dir="/data/adb/modules"
 bin_path="/system/bin/"
@@ -63,9 +63,7 @@ mv ${MODPATH}/resolv.conf ${MODPATH}${dns_path}
 mv ${MODPATH}/clash-dashboard ${clash_data_dir}
 mv ${MODPATH}/Country.mmdb ${clash_data_dir}
 mv ${MODPATH}/scripts ${clash_data_dir}
-mv ${MODPATH}/premium ${clash_data_dir}
 mv ${MODPATH}/config.yaml ${clash_data_dir}
-mv ${MODPATH}/geosite.dat ${clash_data_dir}
 mv ${MODPATH}/Command_CFM.prop ${clash_data_dir}
 cp ${MODPATH}${bin_path}/clash ${clash_data_dir_kernel}
 rm -rf ${MODPATH}/binary
@@ -79,10 +77,10 @@ ui_print "- 80%"
 sleep 1
 
 set_perm_recursive ${MODPATH} 0 0 0755 0644
+set_perm_recursive ${clash_data_dir} ${system_uid} ${system_gid} 0755 0644
 set_perm_recursive ${clash_data_dir}/scripts ${system_uid} ${system_gid} 0755 0755
 set_perm_recursive ${clash_data_dir}/yacd-gh-pages ${system_uid} ${system_gid} 0755 0644
 set_perm_recursive ${clash_data_dir}/kernel ${system_uid} ${system_gid} 0755 0755
-set_perm_recursive ${clash_data_dir} ${system_uid} ${system_gid} 0755 0644
 set_perm  ${MODPATH}/system/bin/setcap  0  0  0755
 set_perm  ${MODPATH}/system/bin/getcap  0  0  0755
 set_perm  ${MODPATH}/system/bin/getpcaps  0  0  0755
@@ -93,11 +91,8 @@ set_perm  ${clash_data_dir}/scripts/clash.tproxy 0  0  0755
 set_perm  ${clash_data_dir}/scripts/clash.tool 0  0  0755
 set_perm  ${clash_data_dir}/scripts/clash.inotify 0  0  0755
 set_perm  ${clash_data_dir}/scripts/clash.service 0  0  0755
-set_perm  ${clash_data_dir}/geosite.dat 0  0  0644
 set_perm  ${clash_data_dir}/clash.config ${system_uid} ${system_gid} 0755
 set_perm  ${clash_data_dir}/packages.list ${system_uid} ${system_gid} 0644
-set_perm  ${clash_data_dir_kernel}/clash 0 0 6755
-set_perm  ${MODPATH}/system/bin/ss  0  0  0755
 ui_print "- 100%"
 
 

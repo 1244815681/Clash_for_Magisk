@@ -1,6 +1,6 @@
-id=Clash4magisk
+id=ClashforMagisk
 name=Clash For Magisk
-version=m1.8.0
+version=v1.8.0
 versionCode=20211212
-author=clover🍀
-description= Gunakan tproxy untuk mendukung proxy transparan Clash.
+author=Tamarin
+description= Proxy Transparan Clash.
