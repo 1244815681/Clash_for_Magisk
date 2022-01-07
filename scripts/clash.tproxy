@@ -2,7 +2,7 @@
 
 scripts=`realpath $0`
 scripts_dir=`dirname ${scripts}`
-. /data/clash/clash.config
+. /data/adb/clash/clash.config
 
 create_rule_rules() {
     ip rule add fwmark ${mark_id} table ${table_id} pref ${pref_id}
@@ -122,7 +122,7 @@ apply_rules() {
 
     ${scripts_dir}/clash.tool -m
 
-    echo "info: iptables规则已应用." >> ${CFM_logs_file}
+    echo "[info] : aturan iptables diterapkan | 🅲🅾🅽🅽🅴🅲🆃." >> ${CFM_logs_file}
 }
 
 flush_rules() {
@@ -161,7 +161,7 @@ flush_rules() {
     ${iptables_wait} -t mangle -F CLASH_PRE
     ${iptables_wait} -t mangle -X CLASH_PRE
     
-    echo "info: iptables规则已清空." >> ${CFM_logs_file}
+    echo "[info] : aturan iptables dihapus | 🅳🅸🆂🅲🅾🅽🅽🅴🆃." >> ${CFM_logs_file}
 }
 
 while getopts ":sk" signal ; do
