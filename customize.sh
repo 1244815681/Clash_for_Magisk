@@ -2,8 +2,8 @@ SKIPUNZIP=1
 
 status=""
 architecture=""
-system_gid="0"
-system_uid="0"
+system_gid="1000"
+system_uid="1000"
 clash_data_dir="/data/adb/clash"
 modules_dir="/data/adb/modules"
 bin_path="/system/bin/"
@@ -36,7 +36,7 @@ esac
 ui_print "- 10%"
 mkdir -p ${MODPATH}/system/bin
 mkdir -p ${clash_data_dir}
-mkdir -p ${clash_data_dir_kernel}
+#mkdir -p ${clash_data_dir_kernel}
 mkdir -p ${clash_data_dir}/yacd-gh-pages
 mkdir -p ${MODPATH}${ca_path}
 
@@ -52,12 +52,17 @@ if [ "$(md5sum ${MODPATH}/clash.config | awk '{print $1}')" != "$(md5sum ${mod_c
 else
     rm -rf ${MODPATH}/clash.config
 fi
+
+if [ ! -f "${clash_data_dir}/template" ] ; then
+    mv ${MODPATH}/template ${clash_data_dir}/
+else
+    rm -rf ${MODPATH}/template
+fi
 ui_print "- 50%"
 
 unzip -o ${MODPATH}/yacd-gh-pages.zip -d ${clash_data_dir}/yacd-gh-pages >&2
 
 tar -xjf ${MODPATH}/binary/${ARCH}.tar.bz2 -C ${MODPATH}/system/bin/
-mv ${MODPATH}/ss ${MODPATH}/system/bin/
 mv ${MODPATH}/cacert.pem ${MODPATH}${ca_path}
 mv ${MODPATH}/resolv.conf ${MODPATH}${dns_path}
 mv ${MODPATH}/clash-dashboard ${clash_data_dir}
@@ -65,7 +70,7 @@ mv ${MODPATH}/Country.mmdb ${clash_data_dir}
 mv ${MODPATH}/scripts ${clash_data_dir}
 mv ${MODPATH}/config.yaml ${clash_data_dir}
 mv ${MODPATH}/Command_CFM.prop ${clash_data_dir}
-cp ${MODPATH}${bin_path}/clash ${clash_data_dir_kernel}
+#cp ${MODPATH}${bin_path}/clash ${clash_data_dir_kernel}
 rm -rf ${MODPATH}/binary
 rm -f ${MODPATH}/yacd-gh-pages.zip
 rm -rf ${MODPATH}/yacd-gh-pages
