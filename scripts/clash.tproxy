@@ -122,7 +122,8 @@ apply_rules() {
 
     ${scripts_dir}/clash.tool -m
 
-    echo "[info] : aturan iptables diterapkan | 🅲🅾🅽🅽🅴🅲🆃." >> ${CFM_logs_file}
+    echo "[info] : aturan iptables diterapkan." >> ${CFM_logs_file}
+    echo "[info] : connect." >> ${CFM_logs_file}
 }
 
 flush_rules() {
@@ -161,7 +162,8 @@ flush_rules() {
     ${iptables_wait} -t mangle -F CLASH_PRE
     ${iptables_wait} -t mangle -X CLASH_PRE
     
-    echo "[info] : aturan iptables dihapus | 🅳🅸🆂🅲🅾🅽🅽🅴🆃." >> ${CFM_logs_file}
+    echo "[info] : aturan iptables dihapus." >> ${CFM_logs_file}
+    echo "[info] : disconnect." >> ${CFM_logs_file}
 }
 
 while getopts ":sk" signal ; do
