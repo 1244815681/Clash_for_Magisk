@@ -9,7 +9,7 @@ modules_dir="/data/adb/modules"
 bin_path="/system/bin/"
 dns_path="/system/etc"
 ca_path="${dns_path}/security/cacerts"
-clash_data_dir_kernel="${clash_data_dir}/kernel"
+clash_data_dir_core="${clash_data_dir}/core"
 CPFM_mode_dir="${modules_dir}/clash_premium"
 mod_config="${clash_data_dir}/clash.config"
 geoip_file_path="${clash_data_dir}/Country.mmdb"
@@ -36,7 +36,7 @@ esac
 ui_print "- 10%"
 mkdir -p ${MODPATH}/system/bin
 mkdir -p ${clash_data_dir}
-#mkdir -p ${clash_data_dir_kernel}
+mkdir -p ${clash_data_dir_core}
 mkdir -p ${clash_data_dir}/yacd-gh-pages
 mkdir -p ${MODPATH}${ca_path}
 
@@ -70,7 +70,7 @@ mv ${MODPATH}/Country.mmdb ${clash_data_dir}
 mv ${MODPATH}/scripts ${clash_data_dir}
 mv ${MODPATH}/config.yaml ${clash_data_dir}
 mv ${MODPATH}/Command_CFM.prop ${clash_data_dir}
-#cp ${MODPATH}${bin_path}/clash ${clash_data_dir_kernel}
+cp ${MODPATH}${bin_path}/clash ${clash_data_dir_core}
 rm -rf ${MODPATH}/binary
 rm -f ${MODPATH}/yacd-gh-pages.zip
 rm -rf ${MODPATH}/yacd-gh-pages
@@ -89,7 +89,8 @@ set_perm_recursive ${clash_data_dir}/kernel ${system_uid} ${system_gid} 0755 075
 set_perm  ${MODPATH}/system/bin/setcap  0  0  0755
 set_perm  ${MODPATH}/system/bin/getcap  0  0  0755
 set_perm  ${MODPATH}/system/bin/getpcaps  0  0  0755
-set_perm  ${MODPATH}/system/bin/curl 0 0 0755
+set_perm  ${MODPATH}/system/bin/ss 0 0 0755
+set_perm  ${MODPATH}/system/bin/clash 0 0 6755
 set_perm  ${MODPATH}${ca_path}/cacert.pem 0 0 0644
 set_perm  ${MODPATH}${dns_path}/resolv.conf 0 0 0755
 set_perm  ${clash_data_dir}/scripts/clash.tproxy 0  0  0755
