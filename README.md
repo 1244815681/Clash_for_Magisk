@@ -1,4 +1,4 @@
-# `clash4magisk`
+# `Clash for Magisk`
 ***`Translate Indonesia`***
 <h1 align="center">
   <img src="https://github.com/Dreamacro/clash/raw/master/docs/logo.png" alt="Clash" width="200">
