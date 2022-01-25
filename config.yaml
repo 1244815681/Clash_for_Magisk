@@ -1,35 +1,39 @@
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
 tproxy-port: 9898
 bind-address: '*'
 mode: rule
 allow-lan: true
-log-level: warning
+log-level: silent
 external-controller: 0.0.0.0:9090
 external-ui: yacd-gh-pages
 unified-delay: true
-ipv6: true
-secret : ""
+ipv6: false
 dns:
   enable: true
-  ipv6: true
+  ipv6: false
   listen: 0.0.0.0:1053
   enhanced-mode: redir-host
   nameserver:
     - https://cloudflare-dns.com/dns-query
   fallback:
-    - https://dns.google/dns-query  
+    - https://dns.google/dns-query
 proxies:
-  - {name: "[Trojan] SG-OVH", server: sg4-trojan.bonds.id, port: 443, udp: true, type: trojan, password: 06652d20-5ae8-11ec-8d34-1239d0255272, sni: maps.google.com, skip-cert-verify: true}
-  - {name: "[Trojan] SG-HE 2", server: sg2-trojan.bonds.id, port: 443, udp: true, type: trojan, password: 17ce6840-5ae8-11ec-9cda-1239d0255272, sni: maps.google.com, skip-cert-verify: true}
-  - {name: "[Trojan] SG-HE 3", server: sg3-trojan.bonds.id, port: 443, udp: true, type: trojan, password: 2a5fb160-5ae8-11ec-bb6e-1239d0255272, sni: maps.google.com, skip-cert-verify: true}
-  - {name: "[Trojan] SG-HE MUX", server: sg6-trojan.bonds.id, port: 443, udp: true, type: trojan, password: 350cf240-5ae8-11ec-8ec8-1239d0255272, sni: maps.google.com, skip-cert-verify: true}
+  - {name: SG 1, server: 194.233.79.194, port: 443, udp: true, type: trojan, password: 9c4ead50-7889-11ec-8ec5-1239d0255272, sni: "maps.google.com;podcasters.spotify.com;video.joox.com", skip-cert-verify: true}
+  
+  - {name: SG 2, server: 103.253.24.248, port: 443, udp: true, type: trojan, password: ad6ec570-7889-11ec-8ecc-1239d0255272, sni: "maps.google.com;podcasters.spotify.com;video.joox.com", skip-cert-verify: true}
+  
+  - {name: SG 3, server: 103.253.24.77, port: 443, udp: true, type: trojan, password: bc210a20-7889-11ec-b2c1-1239d0255272, sni: "maps.google.com;podcasters.spotify.com;video.joox.com", skip-cert-verify: true}
 
 proxy-groups:
-  - name: AKUN
+  - name: Clash
     type: select
-    proxies: 
-      - "[Trojan] SG-OVH"
-      - "[Trojan] SG-HE 2"
-      - "[Trojan] SG-HE 3"
-      - "[Trojan] SG-HE MUX"
+    proxies:
+      - SG 1
+      - SG 2
+      - SG 3
+
 rules:
-  - MATCH,AKUN
+ - MATCH,Clash

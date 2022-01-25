@@ -4,7 +4,7 @@ status=""
 architecture=""
 system_gid="1000"
 system_uid="1000"
-clash_data_dir="/data/adb/clash"
+clash_data_dir="/data/clash"
 modules_dir="/data/adb/modules"
 bin_path="/system/bin/"
 dns_path="/system/etc"
@@ -53,11 +53,6 @@ else
     rm -rf ${MODPATH}/clash.config
 fi
 
-if [ ! -f "${clash_data_dir}/template" ] ; then
-    mv ${MODPATH}/template ${clash_data_dir}/
-else
-    rm -rf ${MODPATH}/template
-fi
 ui_print "- 50%"
 
 unzip -o ${MODPATH}/yacd-gh-pages.zip -d ${clash_data_dir}/yacd-gh-pages >&2
@@ -85,7 +80,7 @@ set_perm_recursive ${MODPATH} 0 0 0755 0644
 set_perm_recursive ${clash_data_dir} ${system_uid} ${system_gid} 0755 0644
 set_perm_recursive ${clash_data_dir}/scripts ${system_uid} ${system_gid} 0755 0755
 set_perm_recursive ${clash_data_dir}/yacd-gh-pages ${system_uid} ${system_gid} 0755 0644
-set_perm_recursive ${clash_data_dir}/kernel ${system_uid} ${system_gid} 0755 0755
+set_perm_recursive ${clash_data_dir}/core ${system_uid} ${system_gid} 0755 0755
 set_perm  ${MODPATH}/system/bin/setcap  0  0  0755
 set_perm  ${MODPATH}/system/bin/getcap  0  0  0755
 set_perm  ${MODPATH}/system/bin/getpcaps  0  0  0755

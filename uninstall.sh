@@ -1,4 +1,4 @@
-Clash_data_dir="/data/adb/clash"
+Clash_data_dir="/data/clash"
 
 rm_data() {
     rm -rf ${Clash_data_dir}
