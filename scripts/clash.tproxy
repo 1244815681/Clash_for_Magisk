@@ -2,7 +2,7 @@
 
 scripts=`realpath $0`
 scripts_dir=`dirname ${scripts}`
-. /data/adb/clash/clash.config
+. /data/clash/clash.config
 
 create_rule_rules() {
     ip rule add fwmark ${mark_id} table ${table_id} pref ${pref_id}
@@ -69,6 +69,11 @@ create_nat_prerouting_dns() {
 create_nat_output_dns() {
     ${iptables_wait} -t nat -N DNS_OUT
 
+    if [ "${mode}" = "blacklist" ] ; then
+        for appuid in `cat ${appuid_file} | sort -u` ; do
+            ${iptables_wait} -t nat -A DNS_OUT -p udp -m owner --uid-owner ${appuid} -j ACCEPT
+        done
+    fi
     ${iptables_wait} -t nat -A DNS_OUT -p udp -j REDIRECT --to-ports ${Clash_dns_port}
 }
 
@@ -99,7 +104,7 @@ apply_rules() {
 
     create_mangle_output_chain
     create_mangle_output_filter
-    
+
     create_nat_prerouting_dns
     create_nat_prerouting_filter
 
@@ -161,7 +166,7 @@ flush_rules() {
     ${iptables_wait} -t mangle -X FILTER_PRE_CLASH
     ${iptables_wait} -t mangle -F CLASH_PRE
     ${iptables_wait} -t mangle -X CLASH_PRE
-    
+
     echo "[info] : aturan iptables dihapus." >> ${CFM_logs_file}
     echo "[info] : disconnect." >> ${CFM_logs_file}
 }
