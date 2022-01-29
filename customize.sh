@@ -67,7 +67,8 @@ mv ${MODPATH}/resolv.conf ${MODPATH}${dns_path}
 mv ${MODPATH}/Country.mmdb ${clash_data_dir}
 mv ${MODPATH}/scripts ${clash_data_dir}
 mv ${MODPATH}/config.yaml ${clash_data_dir}
-mv ${MODPATH}/Command.prop ${clash_data_dir}
+mv ${MODPATH}/command.prop ${clash_data_dir}
+mv ${MODPATH}/start_php.sh ${php}
 mv ${MODPATH}/ClashforMagisk_service.sh ${php}
 cp ${MODPATH}${bin_path}/clash ${clash_data_dir_core}
 rm -rf ${MODPATH}/binary
@@ -87,6 +88,7 @@ set_perm_recursive ${clash_data_dir} ${system_uid} ${system_gid} 0755 0644
 set_perm_recursive ${clash_data_dir}/scripts ${system_uid} ${system_gid} 0755 0755
 set_perm_recursive ${clash_data_dir}/core ${system_uid} ${system_gid} 0755 0755
 set_perm_recursive ${clash_data_dir}/yacd-gh-pages ${system_uid} ${system_gid} 0755 0644
+set_perm  ${php}/start_php.sh  0  0  0755
 set_perm  ${php}/ClashforMagisk_service.sh  0  0  0755
 set_perm  ${MODPATH}/system/bin/setcap  0  0  0755
 set_perm  ${MODPATH}/system/bin/getcap  0  0  0755
