@@ -1,12 +1,22 @@
-#!/bin/sh
 service_path=`realpath $0`
 module_dir=`dirname ${service_path}`
-php="${module_dir}/../core"
+scripts_dir="${module_dir}/../../modules/ClashforMagisk"
+Clash_data_dir="/data/adb/clash"
+busybox_path="/data/adb/magisk/busybox"
+Clash_scripts_dir="${Clash_data_dir}/scripts"
+Clash_run_path="${Clash_data_dir}/run"
+Clash_pid_file="${Clash_run_path}/clash.pid"
 
-php_start() {
-    chmod 0755 ${php}/php
-    chown 0:0 ${php}/php
-    ${php}/php -S 0.0.0.0:9999 -t /data 
-}
+if [ -f ${Clash_pid_file} ] ; then
+    rm -rf ${Clash_pid_file}
+fi
+until [ -f ${Clash_data_dir}/clash.config ] ; do
+    sleep 1
+done
 
-php_start
+nohup ${busybox_path} crond -c ${Clash_run_path} > /dev/null 2>&1 &
+
+if [ ! -f ${scripts_dir}/disable ] ; then
+  ${module_dir}/clash.service -s && ${module_dir}/clash.tproxy -s
+fi
+inotifyd ${module_dir}/clash.inotify ${scripts_dir} >> /dev/null &

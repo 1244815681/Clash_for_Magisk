@@ -2,7 +2,7 @@
 
 scripts=`realpath $0`
 scripts_dir=`dirname ${scripts}`
-. /data/clash/clash.config
+. /data/adb/clash/clash.config
 
 start_clash() {
     rm -rf ${CFM_logs_file}
@@ -38,9 +38,7 @@ start_clash() {
         chown ${Clash_user_group} ${Clash_bin_path}
         chmod ${Clash_permissions} ${Clash_bin_path}
         chown ${Clash_user_group} ${temporary_config_file}
-        chown ${Clash_user_group} ${config_yaml}
         chmod 0644 ${temporary_config_file}
-        chmod 0644 ${config_yaml}
         setcap 'cap_net_admin,cap_net_raw+ep' ${Clash_bin_path}
 
         ${busybox_path} crontab -c ${Clash_run_path} -r
@@ -64,6 +62,7 @@ start_clash() {
 
     if [ -f ${temporary_config_file} ] && [ -f ${Clash_geoip_file} ] ; then
         if $(${Clash_bin_path} -d ${Clash_data_dir} -t -f ${temporary_config_file} > /dev/null) ; then
+            ulimit -SHn 1000000
             nohup ${busybox_path} setuidgid 0:3005 ${Clash_bin_path} -d ${Clash_data_dir} -f ${temporary_config_file} > /dev/null 2>&1 &
             echo -n $! > ${Clash_pid_file}
             echo "[info] : clash dimulai." >> ${CFM_logs_file}

@@ -2,7 +2,7 @@
 
 scripts=`realpath $0`
 scripts_dir=`dirname ${scripts}`
-. /data/clash/clash.config
+. /data/adb/clash/clash.config
 
 create_rule_rules() {
     ip rule add fwmark ${mark_id} table ${table_id} pref ${pref_id}
@@ -144,6 +144,7 @@ flush_rules() {
     ${iptables_wait} -t mangle -X FILTER_LOCAL_IP
 
     ${iptables_wait} -t mangle -D PREROUTING -p tcp -m socket -j DIVERT
+    ${iptables_wait} -t mangle -D PREROUTING -p udp -m socket -j DIVERT
     ${iptables_wait} -t mangle -F DIVERT
     ${iptables_wait} -t mangle -X DIVERT
 
