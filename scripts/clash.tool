@@ -159,7 +159,7 @@ while getopts ":kfmps" signal ; do
             fi
             ;;
         p)
-            sleep 5
+            exit 0
             port_detection
             ;;
         ?)
